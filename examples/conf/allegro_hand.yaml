@@ -1,0 +1,32 @@
+hydra:
+  run:
+    dir: ./
+
+allegro:
+  urdf_path: "allegro_hand_description/allegro_hand_description_left_digit.urdf"
+  base_position: [0, 0, 0.095]
+  use_fixed_base: True
+
+object:
+  urdf_path: "objects/sphere_small.urdf"
+  base_position: [0.05, 0.0, 0.235] # (m)
+  global_scaling: 0.15
+
+# id of the links that are digits
+digit_link_id_allegro: [4, 9, 14, 19]
+
+pybullet_camera:
+  cameraDistance: 0.4
+  cameraYaw: 45.
+  cameraPitch: -45.
+  cameraTargetPosition: [0, 0, 0]
+
+tacto:
+  width: 120
+  height: 160
+  visualize_gui: True
+
+object_control_panel:
+  slider_params:
+    position_low: [-0.3, -0.3, 0]
+    position_high: [0.3, 0.3, 0.3]

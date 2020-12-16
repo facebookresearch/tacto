@@ -1,0 +1,20 @@
+sawyer_gripper:
+  robot_params:
+    urdf_path: "robots/sawyer_wsg50.urdf"
+    use_fixed_base: True
+  init_state:
+    end_effector:
+      position: [0.50, 0, 0.215]
+      # p.getQuaternionFromEuler([0, np.pi, 0])
+      orientation: [0.0, 1.0, 0.0, 0.0]
+    gripper_width: 0.11
+
+object:
+  urdf_path: "objects/cube_small.urdf"
+  base_position: [0.50, 0, 0.02]
+  global_scaling: 0.6
+
+tacto:
+  width: 120
+  height: 160
+  visualize_gui: True
