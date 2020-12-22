@@ -19,7 +19,8 @@ from sawyer_gripper import SawyerGripper
 log = logging.getLogger(__name__)
 
 
-@hydra.main(config_name="conf/grasp")
+# Load the config YAML file from examples/conf/grasp.yaml
+@hydra.main(config_path="conf", config_name="grasp")
 def main(cfg):
     # Initialize digits
     digits = tacto.Sensor(**cfg.tacto)
