@@ -43,6 +43,9 @@ This package contain several components:
 
 ## Usage
 
+Additional packages ([torch](https://github.com/pytorch/pytorch), [gym](https://github.com/openai/gym), [pybulletX](https://github.com/facebookresearch/pybulletX)) are required to run the following examples.
+You can install them by `pip install -r requirements-examples.txt`.
+
 For a basic example on how to use TACTO in conjunction with PyBullet look at [TBD],
 
 For an example of how to use just the renderer engine look at [examples/demo_render.py](examples/demo_render.py).

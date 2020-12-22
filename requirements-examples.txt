@@ -1,6 +1,5 @@
 -r requirements.txt
 
-digit-interface >= 0.1.4
 torch
 gym
-pybulletX 
+pybulletX >= 0.4.1
