@@ -7,3 +7,8 @@ pyrender >= 0.1.43
 hydra-core >= 1.0.0rc2
 urdfpy >= 0.0.22
 scipy
+
+# Need a specific version of PyOpenGL (forked & modified by mmatl) for pyrender
+# to run headlessly using OSMesa. Otherwise, we will get python ImportError:
+# `cannot import name 'OSMesaCreateContextAttribs'`.
+pyopengl @ git+https://github.com/mmatl/pyopengl.git@76d1261adee2d3fd99b418e75b0416bb7d2865e6
