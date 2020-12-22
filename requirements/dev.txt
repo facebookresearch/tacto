@@ -1,4 +1,4 @@
--r requirements-examples.txt
+-r examples.txt
 
 # For packaging
 black
