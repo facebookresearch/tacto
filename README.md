@@ -11,7 +11,7 @@
 <img src="/website/static/img/teaser.jpg?raw=true" alt="TACTO Simulator" />
 
 
-This package provides a simulator for vision-based tactile sensors, such as [DIGIT](https://digit.ml). 
+This package provides a simulator for vision-based tactile sensors, such as [DIGIT](https://digit.ml).
 It provides models for the integration with PyBullet, as well as a renderer of touch readings.
 
 NOTE: the simulator is not meant to provide a physically accurate dynamics of the contacts (e.g., deformation, friction), but rather relies on existing physics engines.
@@ -30,18 +30,21 @@ pip install tacto
 Alternatively, you can manually clone the repository and install the package using:
 
 ```bash
-git clone https://github.com/facebookresearch/tacto.git 
+git clone https://github.com/facebookresearch/tacto.git
 cd tacto
 pip install -e .
 ```
 
 ## Content
-This package contain several components: 
+This package contain several components:
 1) A renderer to simulate readings from vision-based tactile sensors.
-2) An API to simulate vision-based tactile sensors in PyBullet. 
-3) Mesh models and configuration files for the [DIGIT](https://digit.ml) and Omnitact sensors. 
+2) An API to simulate vision-based tactile sensors in PyBullet.
+3) Mesh models and configuration files for the [DIGIT](https://digit.ml) and Omnitact sensors.
 
 ## Usage
+
+Additional packages ([torch](https://github.com/pytorch/pytorch), [gym](https://github.com/openai/gym), [pybulletX](https://github.com/facebookresearch/pybulletX)) are required to run the following examples.
+You can install them by `pip install -r requirements/examples.txt`.
 
 For a basic example on how to use TACTO in conjunction with PyBullet look at [TBD],
 

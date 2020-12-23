@@ -31,7 +31,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip3 install -r requirements-examples.txt
+            pip3 install -r requirements/examples.txt
             python3 setup.py install
 
       - run:

@@ -9,7 +9,7 @@ from setuptools import find_packages, setup
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-install_requires = [line.rstrip() for line in open("requirements.txt", "r")]
+install_requires = [line.rstrip() for line in open("requirements/requirements.txt", "r")]
 
 package_data = {
     'tacto': ["config_digit.yml", "config_omnitact.yml"]
