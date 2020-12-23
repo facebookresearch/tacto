@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 
 
 # Load the config YAML file from examples/conf/omnitact.yaml
-@hydra.main(config_name="conf/omnitact")
+@hydra.main(config_path="conf", config_name="omnitact")
 def main(cfg):
     # Initialize OmniTact
     omnitact = tacto.Sensor(

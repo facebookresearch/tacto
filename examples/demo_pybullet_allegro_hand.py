@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 
 
 # Load the config YAML file from examples/conf/allegro_hand.yaml
-@hydra.main(config_name="conf/allegro_hand")
+@hydra.main(config_path="conf", config_name="allegro_hand")
 def main(cfg):
     # Initialize digits
     # FIXME(poweic): this has to be done before p.connect if PYOPENGL_PLATFORM set to "egl"

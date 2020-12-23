@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 
 # Load the config YAML file from examples/conf/digit.yaml
-@hydra.main(config_name="conf/digit")
+@hydra.main(config_path="conf", config_name="digit")
 def main(cfg):
     # Initialize digits
     bg = cv2.imread("conf/bg_digit_240_320.jpg")
