@@ -28,7 +28,11 @@ def test_render_from_depth_osmesa():
     # Render
     depthmap = np.load(os.path.join(cur_path, "depthmap.npy"))
     color_gt = np.load(os.path.join(cur_path, "color-osmesa-ground-truth.npy"))
+
     color, depth = renderer.render_from_depth(depthmap, scale=0.01)
+    # NOTE(poweic): This is how ground-truth is generated. Run this in docker
+    # and make sure you eyeball the resulting image before committing the change
+    # np.save(os.path.join(cur_path, "color-osmesa-ground-truth.npy"), color)
 
     diff = color - color_gt
     rms = (diff ** 2).mean() ** 0.5
