@@ -36,16 +36,17 @@ def get_omnitact_config_path():
 class Link:
     obj_id: int  # pybullet ID
     link_id: int  # pybullet link ID (-1 means base)
+    cid: int  # physicsClientId
 
     def get_pose(self):
         if self.link_id < 0:
             # get the base pose if link ID < 0
-            position, orientation = p.getBasePositionAndOrientation(self.obj_id)
+            position, orientation = p.getBasePositionAndOrientation(self.obj_id, physicsClientId=self.cid)
         else:
             # get the link pose if link ID >= 0
-            position, orientation = p.getLinkState(self.obj_id, self.link_id)[:2]
+            position, orientation = p.getLinkState(self.obj_id, self.link_id, physicsClientId=self.cid)[:2]
 
-        orientation = p.getEulerFromQuaternion(orientation)
+        orientation = p.getEulerFromQuaternion(orientation, physicsClientId=self.cid)
         return position, orientation
 
 
@@ -59,6 +60,7 @@ class Sensor:
         visualize_gui=True,
         show_depth=True,
         zrange=0.002,
+        cid=0
     ):
         """
 
@@ -68,7 +70,9 @@ class Sensor:
         :param visualize_gui: Bool
         :param show_depth: Bool
         :param config_path:
+        :param cid: Int
         """
+        self.cid = cid
         self.renderer = Renderer(width, height, background, config_path)
 
         self.visualize_gui = visualize_gui
@@ -109,7 +113,7 @@ class Sensor:
 
         for link_id in link_ids:
             cam_name = "cam" + str(self.nb_cam)
-            self.cameras[cam_name] = Link(obj_id, link_id)
+            self.cameras[cam_name] = Link(obj_id, link_id, self.cid)
             self.nb_cam += 1
 
     def add_object(self, urdf_fn, obj_id, globalScaling=1.0):
@@ -147,7 +151,7 @@ class Sensor:
             obj_trimesh = obj_trimesh.apply_transform(pose)
             obj_name = "{}_{}".format(obj_id, link_id)
 
-            self.objects[obj_name] = Link(obj_id, link_id)
+            self.objects[obj_name] = Link(obj_id, link_id, self.cid)
             position, orientation = self.objects[obj_name].get_pose()
 
             # Add object in pyrender
@@ -176,7 +180,7 @@ class Sensor:
         globalScaling = kwargs.get("globalScaling", 1.0)
 
         # Add to pybullet
-        obj_id = p.loadURDF(*args, **kwargs)
+        obj_id = p.loadURDF(physicsClientId=self.cid, *args, **kwargs)
 
         # Add to tacto simulator scene
         self.add_object(urdf_fn, obj_id, globalScaling=globalScaling)
@@ -202,7 +206,7 @@ class Sensor:
         obj_id = self.cameras[cam_name].obj_id
         link_id = self.cameras[cam_name].link_id
 
-        pts = p.getContactPoints(bodyA=obj_id, linkIndexA=link_id)
+        pts = p.getContactPoints(bodyA=obj_id, linkIndexA=link_id, physicsClientId=self.cid)
 
         # accumulate forces from 0. using defaultdict of float
         self.normal_forces[cam_name] = collections.defaultdict(float)
