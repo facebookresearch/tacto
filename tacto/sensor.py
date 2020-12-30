@@ -41,10 +41,14 @@ class Link:
     def get_pose(self):
         if self.link_id < 0:
             # get the base pose if link ID < 0
-            position, orientation = p.getBasePositionAndOrientation(self.obj_id, physicsClientId=self.cid)
+            position, orientation = p.getBasePositionAndOrientation(
+                self.obj_id, physicsClientId=self.cid
+            )
         else:
             # get the link pose if link ID >= 0
-            position, orientation = p.getLinkState(self.obj_id, self.link_id, physicsClientId=self.cid)[:2]
+            position, orientation = p.getLinkState(
+                self.obj_id, self.link_id, physicsClientId=self.cid
+            )[:2]
 
         orientation = p.getEulerFromQuaternion(orientation, physicsClientId=self.cid)
         return position, orientation
@@ -60,7 +64,7 @@ class Sensor:
         visualize_gui=True,
         show_depth=True,
         zrange=0.002,
-        cid=0
+        cid=0,
     ):
         """
 
@@ -206,7 +210,9 @@ class Sensor:
         obj_id = self.cameras[cam_name].obj_id
         link_id = self.cameras[cam_name].link_id
 
-        pts = p.getContactPoints(bodyA=obj_id, linkIndexA=link_id, physicsClientId=self.cid)
+        pts = p.getContactPoints(
+            bodyA=obj_id, linkIndexA=link_id, physicsClientId=self.cid
+        )
 
         # accumulate forces from 0. using defaultdict of float
         self.normal_forces[cam_name] = collections.defaultdict(float)
