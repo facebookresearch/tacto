@@ -1,6 +1,7 @@
 -r examples.txt
 
-# For packaging
+# For development, testing, and packaging
+pre-commit
 black
 flake8
 flake8-copyright
