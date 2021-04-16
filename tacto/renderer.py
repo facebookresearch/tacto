@@ -144,7 +144,7 @@ class Renderer:
         X0, Y0, Z0 = origin[0], origin[1], origin[2]
         W, H = g.width, g.height
 
-        if g.mesh is not None:
+        if hasattr(g, "mesh") and g.mesh is not None:
             gel_trimesh = trimesh.load(g.mesh)
 
             # scale up for clearer indentation
