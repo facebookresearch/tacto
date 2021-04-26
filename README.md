@@ -71,6 +71,10 @@ For advanced examples of how to use the simulator with PyBullet look at the [exa
 NOTE: the renderer requires a screen. For rendering headless, use the "EGL" mode with GPU and CUDA driver or "OSMESA" with CPU. 
 See [PyRender](https://pyrender.readthedocs.io/en/latest/install/index.html) for more details.
 
+## Operating System
+We recommend to conduct experiments on **Ubuntu**.
+
+For **macOS**, there exists some visualization problem between pybullet.GUI and pyrender as we know of. Please let us know if it can be resolved, and we will share the information at the repo!
 
 ## License
 This project is licensed under MIT license, as found in the [LICENSE](LICENSE) file.
