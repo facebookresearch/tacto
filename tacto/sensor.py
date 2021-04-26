@@ -125,8 +125,9 @@ class Sensor:
         robot = URDF.load(urdf_fn)
 
         for link_id, link in enumerate(robot.links):
+            if len(link.visuals) == 0:
+                continue
             link_id = link_id - 1
-
             # Get each links
             visual = link.visuals[0]
             obj_trimesh = visual.geometry.meshes[0]
