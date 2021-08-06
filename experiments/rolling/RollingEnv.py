@@ -325,7 +325,7 @@ class RollingEnv:
         for i in range(simulation_time):
             pb.changeConstraint(self.cid, xyz, maxForce=5)
 
-            position, orientation = self.digits.get_pose(self.objId, -1)
+            # position, orientation = self.digits.get_pose(self.objId, -1)
 
             self.step()
 
