@@ -315,6 +315,8 @@ class Learning:
         total, correct = 0, 0
         print("")
 
+        self.model.eval()
+
         for i, data in enumerate(self.testLoader):
 
             x = {}
@@ -350,6 +352,9 @@ class Learning:
             running_loss = 0.0
             print("")
             st = time.time()
+
+            self.model.train()
+
             for i, data in enumerate(self.trainLoader):
 
                 x = {}
