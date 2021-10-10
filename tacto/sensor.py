@@ -3,10 +3,10 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-import os
-import logging
-import warnings
 import collections
+import logging
+import os
+import warnings
 from dataclasses import dataclass
 
 import cv2
@@ -26,6 +26,10 @@ def _get_default_config(filename):
 
 def get_digit_config_path():
     return _get_default_config("config_digit.yml")
+
+
+def get_digit_shadow_config_path():
+    return _get_default_config("config_digit_shadow.yml")
 
 
 def get_omnitact_config_path():
@@ -300,8 +304,10 @@ class Sensor:
             # concatenate the resulting two images vertically (axis=0)
             color_n_depth = np.concatenate([color, depth], axis=0)
 
-            cv2.imshow("color and depth", color_n_depth)
+            cv2.imshow(
+                "color and depth", cv2.cvtColor(color_n_depth, cv2.COLOR_RGB2BGR)
+            )
         else:
-            cv2.imshow("color", color)
+            cv2.imshow("color", cv2.cvtColor(color, cv2.COLOR_RGB2BGR))
 
         cv2.waitKey(1)

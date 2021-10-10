@@ -14,12 +14,19 @@ import tacto  # Import TACTO
 log = logging.getLogger(__name__)
 
 
-# Load the config YAML file from examples/conf/digit.yaml
-@hydra.main(config_path="conf", config_name="digit")
+# Load the config YAML file from examples/conf/digit_shadow.yaml
+@hydra.main(config_path="conf", config_name="digit_shadow")
 def main(cfg):
     # Initialize digits
     bg = cv2.imread("conf/bg_digit_240_320.jpg")
-    digits = tacto.Sensor(**cfg.tacto, background=bg)
+    # bg = cv2.cvtColor(bg, cv2.COLOR_BGR2RGB)
+    # digits = tacto.Sensor(**cfg.tacto, background=bg)
+
+    digits = tacto.Sensor(
+        **cfg.tacto,
+        **{"config_path": tacto.get_digit_shadow_config_path()},
+        background=bg
+    )
 
     # Initialize World
     log.info("Initializing world")

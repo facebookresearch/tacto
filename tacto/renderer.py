@@ -23,26 +23,34 @@ Default is pyglet, which requires active window
 
 import logging
 
-import numpy as np
 import cv2
+import numpy as np
+import pybullet as p
 import pyrender
 import trimesh
 from omegaconf import OmegaConf
 from scipy.spatial.transform import Rotation as R
 
-import pybullet as p
-
 logger = logging.getLogger(__name__)
 
 
-def euler2matrix(angles=[0, 0, 0], translation=[0, 0, 0]):
-    q = p.getQuaternionFromEuler(angles)
-    r = np.array(p.getMatrixFromQuaternion(q)).reshape(3, 3)
+def euler2matrix(angles=[0, 0, 0], translation=[0, 0, 0], xyz="xyz", degrees=False):
+    r = R.from_euler(xyz, angles, degrees=degrees)
 
     pose = np.eye(4)
     pose[:3, 3] = translation
-    pose[:3, :3] = r
+    pose[:3, :3] = r.as_matrix()
     return pose
+
+
+# def euler2matrix(angles=[0, 0, 0], translation=[0, 0, 0]):
+#     q = p.getQuaternionFromEuler(angles)
+#     r = np.array(p.getMatrixFromQuaternion(q)).reshape(3, 3)
+
+#     pose = np.eye(4)
+#     pose[:3, 3] = translation
+#     pose[:3, :3] = r
+#     return pose
 
 
 class Renderer:
@@ -73,6 +81,27 @@ class Renderer:
             self.min_force = self.conf.sensor.force.range_force[0]
             self.max_force = self.conf.sensor.force.range_force[1]
             self.max_deformation = self.conf.sensor.force.max_deformation
+
+        self.shadow_enabled = (
+            "shadow" in self.conf.sensor.lights and self.conf.sensor.lights.shadow
+        )
+
+        self.spot_light_enabled = (
+            "spot" in self.conf.sensor.lights and self.conf.sensor.lights.spot
+        )
+
+        self.flags_render = 0
+
+        # enable flags for rendering
+        if self.shadow_enabled:
+            # Please use spotlight for rendering shadows
+            # Reference: https://pyrender.readthedocs.io/en/latest/_modules/pyrender/light.html
+            assert self.spot_light_enabled == True
+
+            self.flags_render |= (
+                pyrender.constants.RenderFlags.RGBA
+                | pyrender.constants.RenderFlags.SHADOWS_SPOT
+            )
 
         self._init_pyrender()
 
@@ -301,10 +330,34 @@ class Renderer:
 
         for i in range(len(colors)):
 
-            color = colors[i]
-            light_pose_0 = euler2matrix(angles=[0, 0, 0], translation=xyz[i] + origin)
+            if not self.spot_light_enabled:
+                # create pyrender.PointLight
+                color = colors[i]
+                light_pose_0 = euler2matrix(
+                    angles=[0, 0, 0], translation=xyz[i] + origin
+                )
 
-            light = pyrender.PointLight(color=color, intensity=intensities[i])
+                light = pyrender.PointLight(color=color, intensity=intensities[i])
+
+            elif self.spot_light_enabled:
+                # create pyrender.SpotLight
+                color = colors[i]
+
+                theta = np.pi / 180 * (thetas[i] - 90)
+                tuning_angle = -np.pi / 16
+                light_pose_0 = euler2matrix(
+                    xyz="yzx",
+                    angles=[0, tuning_angle, theta],
+                    translation=xyz[i] + origin,
+                )
+
+                light = pyrender.SpotLight(
+                    color=color,
+                    intensity=intensities[i],
+                    innerConeAngle=0,
+                    outerConeAngle=np.pi / 3,
+                )
+
             light_node = pyrender.Node(light=light, matrix=light_pose_0)
 
             self.scene.add_node(light_node)
@@ -512,7 +565,7 @@ class Renderer:
                     camera_pos, camera_ori, normal_forces, object_poses,
                 )
 
-            color, depth = self.r.render(self.scene)
+            color, depth = self.r.render(self.scene, flags=self.flags_render)
             color, depth = self._post_process(color, depth, i, noise, calibration)
 
             colors.append(color)
