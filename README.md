@@ -67,6 +67,8 @@ For advanced examples of how to use the simulator with PyBullet look at the [exa
 * [examples/demo_pybullet_rolling.py](examples/demo_rolling.py): rolling a marble with two DIGIT sensors.
 <img src="/website/static/img/demo_rolling.gif?raw=true" alt="Demo Rolling" />
 
+* [examples/demo_pybullet_digit_shadow.py](examples/demo_pybullet_digit_shadow.py): enable shadow rendering.
+<img src="/website/static/img/demo_shadow.gif?raw=true" alt="Demo Shadow" />
 
 NOTE: the renderer requires a screen. For rendering headless, use the "EGL" mode with GPU and CUDA driver or "OSMESA" with CPU. 
 See [PyRender](https://pyrender.readthedocs.io/en/latest/install/index.html) for more details.
