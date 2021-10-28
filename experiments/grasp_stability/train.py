@@ -208,7 +208,8 @@ class Learning:
 
         # rootDir = "data/test/"
         # rootDir = "data/resmid/"
-        rootDir = "/media/shawn/Extreme SSD/Code/stability/data/separate"
+        # rootDir = "/media/shawn/Extreme SSD/Code/stability/data/separate"
+        rootDir = "data/grasp/"
         # fileNames = glob.glob(os.path.join(rootDir, "*.h5"))
         fileNames = glob.glob(os.path.join(rootDir, "*"))
         fileNames = sorted(fileNames)[: args.N]
