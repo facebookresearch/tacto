@@ -70,8 +70,23 @@ For advanced examples of how to use the simulator with PyBullet look at the [exa
 * [examples/demo_pybullet_digit_shadow.py](examples/demo_pybullet_digit_shadow.py): enable shadow rendering.
 <img src="/website/static/img/demo_shadow.gif?raw=true" alt="Demo Shadow" />
 
+### Headless Rendering
+
 NOTE: the renderer requires a screen. For rendering headless, use the "EGL" mode with GPU and CUDA driver or "OSMESA" with CPU. 
 See [PyRender](https://pyrender.readthedocs.io/en/latest/install/index.html) for more details.
+
+Additionally, install the patched version of PyOpenGL via,
+
+```
+pip install git+https://github.com/mmatl/pyopengl.git@76d1261adee2d3fd99b418e75b0416bb7d2865e6
+```
+
+You may then specify which engine to use for headless rendering, for example,
+
+```
+import os
+os.environ["PYOPENGL_PLATFORM"] = "osmesa" # osmesa cpu rendering
+```
 
 ## Operating System
 We recommend to conduct experiments on **Ubuntu**.
