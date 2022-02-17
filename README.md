@@ -13,6 +13,7 @@
 
 This package provides a simulator for vision-based tactile sensors, such as [DIGIT](https://digit.ml).
 It provides models for the integration with PyBullet, as well as a renderer of touch readings.
+For more information refer to the corresponding paper [TACTO: A Fast, Flexible, and Open-source Simulator for High-resolution Vision-based Tactile Sensors](https://arxiv.org/abs/2012.08456).
 
 NOTE: the simulator is not meant to provide a physically accurate dynamics of the contacts (e.g., deformation, friction), but rather relies on existing physics engines.
 
@@ -101,12 +102,17 @@ This project is licensed under MIT license, as found in the [LICENSE](LICENSE) f
 If you use this project in your research, please cite:
 
 ```BibTeX
-@Article{Wang2020TACTO,
-  author  = {Wang, Shaoxiong and Lambeta, Mike and Chou, Lambeta and Calandra, Roberto},
-  title   = {TACTO: A Fast, Flexible and Open-source Simulator for High-Resolution Vision-based Tactile Sensors},
-  journal = {Arxiv},
-  year    = {2020},
-  url     = {https://arxiv.org/abs/2012.08456},
+@Article{Wang2022TACTO,
+  author   = {Wang, Shaoxiong and Lambeta, Mike and Chou, Po-Wei and Calandra, Roberto},
+  title    = {{TACTO}: A Fast, Flexible, and Open-source Simulator for High-resolution Vision-based Tactile Sensors},
+  journal  = {IEEE Robotics and Automation Letters (RA-L)},
+  year     = {2022},
+  volume   = {7},
+  number   = {2},
+  pages    = {3930--3937},
+  issn     = {2377-3766},
+  doi      = {10.1109/LRA.2022.3146945},
+  url      = {https://arxiv.org/abs/2012.08456},
 }
 ```
 
